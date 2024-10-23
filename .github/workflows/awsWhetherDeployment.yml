@@ -47,7 +47,7 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-access-key-id: ${{ secrets.AWSKEY }}
-        aws-secret-access-key: ${{ secrets.AWSSECRET }}
+        aws-secret-access-key: ${{ secrets.AWSSECRETKEY }}
         aws-region: us-east-1
  
     - name: Deploy to AWS CloudFormation
