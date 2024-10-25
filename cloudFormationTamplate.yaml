@@ -112,7 +112,15 @@ Resources:
       PolicyName: WeatherLambdaRolePolicy
       Roles:
         - !Ref WeatherLambdaRole
-
+        
+ LambdaInvokePermissions:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      FunctionName: !Ref WeatherUpdatesLambdaFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceAccount: '252544727452'
+      
   WeatherRestApi:
     Type: 'AWS::ApiGateway::RestApi'
     Properties:
@@ -236,16 +244,7 @@ Resources:
         - WeatherEventBridgeRule
         - Arn
 
-Outputs:
-  WeatherApiEndpoint9062F38A:
-    Value: !Join 
-      - ''
-      - - 'https://'
-        - !Ref WeatherRestApi
-        - .execute-api.
-        - !Ref 'AWS::Region'
-        - .
-        - !Ref 'AWS::URLSuffix'
-        - /
-        - !Ref WeatherApiDeploymentStage
-        - /
+ Outputs:
+  WeatherApiEndpoint:
+    Value: !Sub
+      'https://${WeatherRestApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/${WeatherApiDeploymentStage}/'
