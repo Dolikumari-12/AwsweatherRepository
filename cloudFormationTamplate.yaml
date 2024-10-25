@@ -3,7 +3,7 @@ Resources:
   WeatherData:
     Type: 'AWS::DynamoDB::Table'
     Properties:
-      TableName: Weather
+      TableName: WeatherData
       AttributeDefinitions:
         - AttributeName: city
           AttributeType: S
