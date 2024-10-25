@@ -31,10 +31,17 @@ jobs:
         aws-access-key-id: ${{ secrets.AWSKEY }}
         aws-secret-access-key: ${{ secrets.AWSSECRETKEY }}
         aws-region: us-east-1
-    - name: Copy artifact to s3 bucket
+        
+    - name: Create S3 bucket
+      run: |
+          aws s3api create-bucket --bucket aws-case-study-bucket --region us-east-1
+      continue-on-error: true
+
+    - name: Copy artifact to S3 bucket
       run: aws s3 cp ./target/WeatherDataAPP-0.0.1-SNAPSHOT.jar s3://aws-case-study-bucket/
-    - name: Copy cloudtemplate to s3 bucket
-      run: aws s3 cp ./cloudFormationTamplate.yaml s3://aws-case-study-bucket/
+
+    - name: Copy CloudFormation template to S3 bucket
+      run: aws s3 cp ./cloudformationtemplate.yml s3://aws-case-study-bucket/
   deploy:
     needs: build
     runs-on: ubuntu-latest
